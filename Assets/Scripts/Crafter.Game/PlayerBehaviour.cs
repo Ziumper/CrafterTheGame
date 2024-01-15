@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace Crafter.Game
 {
+
     public class PlayerBehaviour : MonoBehaviour
     {
         [Header("Movement")]
@@ -28,7 +30,15 @@ namespace Crafter.Game
 
         void Update()
         {
-            HandleMovement();    
+            HandleMovement();
+            HandleInput();
+        }
+
+        private void HandleInput()
+        {
+            if(Input.GetButtonDown("Cancel")) {
+                GameManager.Instance.BackToMenu();
+            }
         }
 
         public void HandleMovement()
