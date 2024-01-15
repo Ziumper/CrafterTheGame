@@ -1,3 +1,4 @@
+using Crafter.Game.Interaction;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,26 +7,51 @@ using UnityEngine;
 
 namespace Crafter.Game
 {
-
     public class PlayerBehaviour : MonoBehaviour
     {
         [Header("Movement")]
         [SerializeField] private float _playerSpeed = 5.0f;
         [SerializeField] private float _jumpForce = 1.0f;
 
-        [Header("Components")]
-        [SerializeField] private Camera _gameCamera;
+        [Header("Equipment Bag")]
+        [SerializeField] private List<GameObject> _equipment = new List<GameObject>();
+
+        private Camera _gameCamera;
         private CharacterController _controller;
         private Animator _animator;
+        private InteractionZone _interactionZone;
         
         private Vector3 _playerVelocity;
         private bool _groundedPlayer;
         private float _gravityValue = -9.81f;
+        private LinkedList<Interactable> _interactables;
+        
 
         private void Start()
         {
-            _controller = gameObject.GetComponentInChildren<CharacterController>();
+            _gameCamera = Camera.main;
+            _controller = gameObject.GetComponent<CharacterController>();
             _animator = gameObject.GetComponentInChildren<Animator>();
+            _interactionZone = gameObject.GetComponentInChildren<InteractionZone>();
+            
+            _interactables = new LinkedList<Interactable>();
+            _interactionZone.OnInteractionNotice.AddListener(OnInteractionNotice);
+            _interactionZone.OnInteractionIgnore.AddListener(OnInteractionIgnore);
+        }
+
+        private void OnDestroy()
+        {
+            _equipment.Clear();
+        }
+
+        private void OnInteractionIgnore(Interactable interaction)
+        {
+            _interactables.Remove(interaction);
+        }
+
+        private void OnInteractionNotice(Interactable interaction)
+        {
+            _interactables.AddFirst(interaction);
         }
 
         void Update()
@@ -34,14 +60,20 @@ namespace Crafter.Game
             HandleInput();
         }
 
+
         private void HandleInput()
         {
             if(Input.GetButtonDown("Cancel")) {
                 GameManager.Instance.BackToMenu();
             }
+
+            if(Input.GetButtonDown("Submit"))
+            {
+                Interact();
+            }
         }
 
-        public void HandleMovement()
+        private void HandleMovement()
         {
             _groundedPlayer = _controller.isGrounded;
 
@@ -82,6 +114,23 @@ namespace Crafter.Game
 
             _controller.Move(_playerVelocity * Time.deltaTime);
         }
+
+        public void AddToBag(GameObject gameObject)
+        {
+            _equipment.Add(gameObject);
+        }
+        
+        private void Interact()
+        {
+            if (_interactables.Count > 0)
+            {
+                Debug.Log("Interacting");
+                InteractionArgs args = new InteractionArgs() { Subject = gameObject };
+                _interactables.First.Value.Interact(args);
+                _interactables.RemoveFirst();
+            }
+        }
+
     }
 
 }
