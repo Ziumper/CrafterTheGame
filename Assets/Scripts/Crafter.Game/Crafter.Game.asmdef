@@ -1,3 +1,16 @@
 {
-	"name": "Crafter.Game"
+    "name": "Crafter.Game",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2b1a850d6af9d6546a448d616385a942"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
