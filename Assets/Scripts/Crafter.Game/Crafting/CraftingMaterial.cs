@@ -1,0 +1,11 @@
+﻿using Crafter.Game.Equipment;
+using UnityEngine;
+
+namespace Crafter.Game.Crafting
+{
+    public class CraftingMaterial
+    {
+        [field: SerializeField] public int AmountNeeded;
+        [field: SerializeField] public EquipmentObject Material { get; set; }
+    }
+}
