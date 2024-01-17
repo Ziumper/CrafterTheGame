@@ -3,7 +3,6 @@
 
 namespace Crafter.Game
 {
-
     public class GameManager : MonoSingleton<GameManager>
     {
         public bool StartGameOrContinue()
