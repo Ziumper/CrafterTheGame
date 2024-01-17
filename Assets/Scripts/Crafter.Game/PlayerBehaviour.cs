@@ -51,7 +51,7 @@ namespace Crafter.Game
 
         private void OnInteractionNotice(Interactable interaction)
         {
-            _interactables.AddFirst(interaction);
+            _interactables.AddLast(interaction);
         }
 
         void Update()
@@ -124,7 +124,6 @@ namespace Crafter.Game
         {
             if (_interactables.Count > 0)
             {
-                Debug.Log("Interacting");
                 InteractionArgs args = new InteractionArgs() { Subject = gameObject };
                 _interactables.First.Value.Interact(args);
                 _interactables.RemoveFirst();
