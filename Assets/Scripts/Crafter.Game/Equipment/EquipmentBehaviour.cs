@@ -1,8 +1,13 @@
-﻿namespace Crafter.Game.Interaction
+﻿using Crafter.Game.Interaction;
+using UnityEngine;
+
+namespace Crafter.Game.Equipment
 {
-    public class PickupInteraction : MonoInteraction
+    public class EquipmentBehaviour : MonoInteraction
     {
         private Outline _outline;
+        
+        [field: SerializeField] public EquipmentObject EquipmentObject { get; private set; }
 
         void Start()
         {
@@ -27,11 +32,10 @@
         {
             base.Interact(args);
 
-            //do something with player add object to bag
             var player = args.Subject.GetComponent<PlayerBehaviour>();
-            
+
             gameObject.SetActive(false);
-            player.AddToBag(gameObject);
+            player.EquipmentBag.AddToBag(gameObject);
         }
     }
 

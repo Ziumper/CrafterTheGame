@@ -1,9 +1,7 @@
+using Crafter.Game.Equipment;
 using Crafter.Game.Interaction;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace Crafter.Game
 {
@@ -13,19 +11,21 @@ namespace Crafter.Game
         [SerializeField] private float _playerSpeed = 5.0f;
         [SerializeField] private float _jumpForce = 1.0f;
 
-        [Header("Equipment Bag")]
-        [SerializeField] private List<GameObject> _equipment = new List<GameObject>();
-
+        [Header("Equipment")]
+        [SerializeField] private EquipmentBag _bag;
+       
         private Camera _gameCamera;
         private CharacterController _controller;
         private Animator _animator;
         private InteractionZone _interactionZone;
-        
+
         private Vector3 _playerVelocity;
         private bool _groundedPlayer;
         private float _gravityValue = -9.81f;
         private LinkedList<Interactable> _interactables;
-        
+
+        public IEquipmentBag EquipmentBag => _bag;
+
 
         private void Start()
         {
@@ -33,15 +33,10 @@ namespace Crafter.Game
             _controller = gameObject.GetComponent<CharacterController>();
             _animator = gameObject.GetComponentInChildren<Animator>();
             _interactionZone = gameObject.GetComponentInChildren<InteractionZone>();
-            
+
             _interactables = new LinkedList<Interactable>();
             _interactionZone.OnInteractionNotice.AddListener(OnInteractionNotice);
             _interactionZone.OnInteractionIgnore.AddListener(OnInteractionIgnore);
-        }
-
-        private void OnDestroy()
-        {
-            _equipment.Clear();
         }
 
         private void OnInteractionIgnore(Interactable interaction)
@@ -63,11 +58,12 @@ namespace Crafter.Game
 
         private void HandleInput()
         {
-            if(Input.GetButtonDown("Cancel")) {
+            if (Input.GetButtonDown("Cancel"))
+            {
                 GameManager.Instance.BackToMenu();
             }
 
-            if(Input.GetButtonDown("Submit"))
+            if (Input.GetButtonDown("Submit"))
             {
                 Interact();
             }
@@ -115,11 +111,6 @@ namespace Crafter.Game
             _controller.Move(_playerVelocity * Time.deltaTime);
         }
 
-        public void AddToBag(GameObject gameObject)
-        {
-            _equipment.Add(gameObject);
-        }
-        
         private void Interact()
         {
             if (_interactables.Count > 0)
@@ -129,7 +120,6 @@ namespace Crafter.Game
                 _interactables.RemoveFirst();
             }
         }
-
     }
 
 }
