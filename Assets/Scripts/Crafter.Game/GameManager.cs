@@ -27,7 +27,7 @@ namespace Crafter.Game
         {
             PlayerBehaviour playerBehaviour = Object.FindObjectOfType<PlayerBehaviour>(true);
             playerBehaviour.gameObject.SetActive(false);
-            FindAnyObjectByType<UserInterfaceController>().ShowStartPanel();
+            UserInterfaceController.Instance.ShowStartPanel();
         }
     }
 

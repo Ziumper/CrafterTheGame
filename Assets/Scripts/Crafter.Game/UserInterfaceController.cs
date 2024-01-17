@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Crafter.Game
 {
-    public class  UserInterfaceController : MonoBehaviour
+    public class UserInterfaceController : MonoSingleton<UserInterfaceController>
     {
         [SerializeField] private GameObject _starPanel;
 

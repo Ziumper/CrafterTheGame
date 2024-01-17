@@ -5,59 +5,99 @@ using UnityEngine;
 
 namespace Crafter.Game.Equipment
 {
-    [Serializable]
-    public class EquipmentBag : IEquipmentBag
+    public class EquipmentBag : MonoBehaviour, IEquipmentBag
     {
-        [Serializable]
-        public class EquipmentListItem 
+        [SerializeField] private EquipmentBagSlot[] _equipmentSlots;
+        [SerializeField] private GameObject _equipmentPanel;
+
+        private void Start()
         {
-            public EquipmentObject Equipment;
-            public List<GameObject> GameObjects = new List<GameObject>();
+            if (_equipmentSlots.Length <= 0)
+            {
+                FindSlots();
+            }
+
+            foreach(var slot in _equipmentSlots)
+            {
+                slot.OnSlotClicked.AddListener(OnBagSlotCliked);
+            }
         }
 
-        [SerializeField]
-        private List<EquipmentListItem> _items = new List<EquipmentListItem>();
-
-        public bool AddToBag(GameObject equipment)
+        public void ToggleEquipmentPanel()
         {
-            var behaviour = equipment.GetComponent<EquipmentBehaviour>();
+            _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
+        }
+
+        private void OnBagSlotCliked(EquipmentBagSlot slot)
+        {
+            if(!slot.IsEmpty)
+            {
+                RemoveFromBag(slot.RemoveOne());
+            }
+        }
+
+        public void AddToBag(GameObject gameObject)
+        {
+            var behaviour = gameObject.GetComponent<EquipmentBehaviour>();
             if(behaviour == null)
             {
-                Debug.LogError("Can't add to bag. No equipment behaviour provided for equipment gameObject", equipment);
-                return false;
+                Debug.LogError("Can't add to bag. No equipment behaviour provided for equipment gameObject", gameObject);
+                return;
             }
 
             var objectFromEquipment = behaviour.EquipmentObject;
             if(objectFromEquipment == null)
             {
-                Debug.LogError("Can't add to bag. No equipment object provided for equipment behaviour in equipment gameObject", equipment);
-                return false;
+                Debug.LogError("Can't add to bag. No equipment object provided for equipment behaviour in equipment gameObject", gameObject);
+                return;
             }
 
-            var equipmentListItem = _items.FirstOrDefault(item => item.Equipment.Equals(objectFromEquipment));
-            bool notConatinsEquipment = equipmentListItem == null;
+            var bagSlot = _equipmentSlots.FirstOrDefault(item => item.ContainsEquipment(objectFromEquipment));
+            bool notConatinsEquipment = bagSlot == null;
             if (notConatinsEquipment)
             {
-                _items.Add(
-                    new EquipmentListItem
-                    {
-                        Equipment = objectFromEquipment,
-                        GameObjects = new List<GameObject>() { equipment }
-                    });
+                bagSlot = _equipmentSlots.FirstOrDefault(_item => _item.IsEmpty);
+                if(bagSlot == null)
+                {
+                    Debug.Log($"Can't add {objectFromEquipment.Name} to bag. No empty slots inside bag!");
+                    return;
+                }
 
-                return true;
+                bagSlot.AddToSlot(objectFromEquipment, gameObject);
+                Debug.Log($"Added equipment {objectFromEquipment.Name} to bag", gameObject);
+                return;
             }
-
-            equipmentListItem.GameObjects.Add(equipment);
-
-            Debug.Log($"Added equipment object to bag {equipment.name}", equipment);
-            return true;
+            
+            bagSlot.AddToSlot(gameObject);
+            Debug.Log($"Added equipment object to bag {objectFromEquipment.Name}", gameObject);
         }
 
-        public bool RemoveFromBag(GameObject equipment)
+        public void RemoveFromBag(GameObject gameObject)
         {
-            Debug.Log($"Removed equipment object from bag {equipment.name}", equipment);
-            return true;
+            var equipmentBehaviour = gameObject.GetComponent<EquipmentBehaviour>();
+            
+            if(equipmentBehaviour == null)
+            {
+                Debug.LogError("No equipment behaviour provided can't remove from bag",gameObject);
+                return;
+            }
+
+            if(equipmentBehaviour.EquipmentObject == null)
+            {
+                Debug.LogError("Can't remove. No equipment provided in equipment object", gameObject);
+                return;
+            }
+
+            gameObject.transform.position = this.gameObject.transform.position;
+            gameObject.SetActive(true);
+
+            Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
+        }
+
+        [ContextMenu("Find Bag Slots")]
+        private void FindSlots()
+        {
+            _equipmentSlots = GetComponentsInChildren<EquipmentBagSlot>(true);
         }
     }
 }

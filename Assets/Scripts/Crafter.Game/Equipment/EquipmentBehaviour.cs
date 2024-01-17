@@ -38,5 +38,4 @@ namespace Crafter.Game.Equipment
             player.EquipmentBag.AddToBag(gameObject);
         }
     }
-
 }

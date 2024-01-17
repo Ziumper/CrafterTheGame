@@ -11,9 +11,7 @@ namespace Crafter.Game
         [SerializeField] private float _playerSpeed = 5.0f;
         [SerializeField] private float _jumpForce = 1.0f;
 
-        [Header("Equipment")]
-        [SerializeField] private EquipmentBag _bag;
-       
+        private EquipmentBag _bag;
         private Camera _gameCamera;
         private CharacterController _controller;
         private Animator _animator;
@@ -33,7 +31,7 @@ namespace Crafter.Game
             _controller = gameObject.GetComponent<CharacterController>();
             _animator = gameObject.GetComponentInChildren<Animator>();
             _interactionZone = gameObject.GetComponentInChildren<InteractionZone>();
-
+            _bag = gameObject.GetComponent<EquipmentBag>();
             _interactables = new LinkedList<Interactable>();
             _interactionZone.OnInteractionNotice.AddListener(OnInteractionNotice);
             _interactionZone.OnInteractionIgnore.AddListener(OnInteractionIgnore);
@@ -66,6 +64,11 @@ namespace Crafter.Game
             if (Input.GetButtonDown("Submit"))
             {
                 Interact();
+            }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                _bag.ToggleEquipmentPanel();
             }
         }
 
