@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
 
 namespace Crafter.Game.Equipment
@@ -9,6 +10,7 @@ namespace Crafter.Game.Equipment
     {
         [SerializeField] private EquipmentBagSlot[] _equipmentSlots;
         [SerializeField] private GameObject _equipmentPanel;
+        [Tooltip("How far object should, be next to player"), SerializeField] private float _removeFromBagOffset = 2f;
 
         private void Start()
         {
@@ -88,7 +90,8 @@ namespace Crafter.Game.Equipment
                 return;
             }
 
-            gameObject.transform.position = this.gameObject.transform.position;
+
+            gameObject.transform.position = transform.position + transform.forward * _removeFromBagOffset;
             gameObject.SetActive(true);
 
             Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
