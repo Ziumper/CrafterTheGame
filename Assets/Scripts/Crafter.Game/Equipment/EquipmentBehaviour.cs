@@ -36,6 +36,7 @@ namespace Crafter.Game.Equipment
 
             gameObject.SetActive(false);
             player.EquipmentBag.AddToBag(gameObject);
+            _outline.enabled = false;
         }
     }
 }

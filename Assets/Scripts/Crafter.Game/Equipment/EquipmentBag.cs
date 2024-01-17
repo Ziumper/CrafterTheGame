@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Crafter.Game.Equipment
@@ -10,7 +7,7 @@ namespace Crafter.Game.Equipment
     {
         [SerializeField] private EquipmentBagSlot[] _equipmentSlots;
         [SerializeField] private GameObject _equipmentPanel;
-        [Tooltip("How far object should, be next to player"), SerializeField] private float _removeFromBagOffset = 2f;
+        [Tooltip("How far removed object should, be next to player"), SerializeField] private float _throwRadius = 2f;
 
         private void Start()
         {
@@ -19,7 +16,7 @@ namespace Crafter.Game.Equipment
                 FindSlots();
             }
 
-            foreach(var slot in _equipmentSlots)
+            foreach (var slot in _equipmentSlots)
             {
                 slot.OnSlotClicked.AddListener(OnBagSlotCliked);
             }
@@ -32,7 +29,7 @@ namespace Crafter.Game.Equipment
 
         private void OnBagSlotCliked(EquipmentBagSlot slot)
         {
-            if(!slot.IsEmpty)
+            if (!slot.IsEmpty)
             {
                 RemoveFromBag(slot.RemoveOne());
             }
@@ -41,14 +38,14 @@ namespace Crafter.Game.Equipment
         public void AddToBag(GameObject gameObject)
         {
             var behaviour = gameObject.GetComponent<EquipmentBehaviour>();
-            if(behaviour == null)
+            if (behaviour == null)
             {
                 Debug.LogError("Can't add to bag. No equipment behaviour provided for equipment gameObject", gameObject);
                 return;
             }
 
             var objectFromEquipment = behaviour.EquipmentObject;
-            if(objectFromEquipment == null)
+            if (objectFromEquipment == null)
             {
                 Debug.LogError("Can't add to bag. No equipment object provided for equipment behaviour in equipment gameObject", gameObject);
                 return;
@@ -59,7 +56,7 @@ namespace Crafter.Game.Equipment
             if (notConatinsEquipment)
             {
                 bagSlot = _equipmentSlots.FirstOrDefault(_item => _item.IsEmpty);
-                if(bagSlot == null)
+                if (bagSlot == null)
                 {
                     Debug.Log($"Can't add {objectFromEquipment.Name} to bag. No empty slots inside bag!");
                     return;
@@ -69,7 +66,7 @@ namespace Crafter.Game.Equipment
                 Debug.Log($"Added equipment {objectFromEquipment.Name} to bag", gameObject);
                 return;
             }
-            
+
             bagSlot.AddToSlot(gameObject);
             Debug.Log($"Added equipment object to bag {objectFromEquipment.Name}", gameObject);
         }
@@ -77,21 +74,20 @@ namespace Crafter.Game.Equipment
         public void RemoveFromBag(GameObject gameObject)
         {
             var equipmentBehaviour = gameObject.GetComponent<EquipmentBehaviour>();
-            
-            if(equipmentBehaviour == null)
+
+            if (equipmentBehaviour == null)
             {
-                Debug.LogError("No equipment behaviour provided can't remove from bag",gameObject);
+                Debug.LogError("No equipment behaviour provided can't remove from bag", gameObject);
                 return;
             }
 
-            if(equipmentBehaviour.EquipmentObject == null)
+            if (equipmentBehaviour.EquipmentObject == null)
             {
                 Debug.LogError("Can't remove. No equipment provided in equipment object", gameObject);
                 return;
             }
 
-
-            gameObject.transform.position = transform.position + transform.forward * _removeFromBagOffset;
+            gameObject.RotateRandomAround(this.gameObject,_throwRadius);
             gameObject.SetActive(true);
 
             Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
@@ -100,7 +96,7 @@ namespace Crafter.Game.Equipment
         [ContextMenu("Find Bag Slots")]
         private void FindSlots()
         {
-            _equipmentSlots = GetComponentsInChildren<EquipmentBagSlot>(true);
+            _equipmentSlots = _equipmentPanel.GetComponentsInChildren<EquipmentBagSlot>(true);
         }
     }
 }

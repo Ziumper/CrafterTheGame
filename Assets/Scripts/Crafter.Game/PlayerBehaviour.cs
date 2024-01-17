@@ -123,6 +123,8 @@ namespace Crafter.Game
                 _interactables.RemoveFirst();
             }
         }
+
+    
     }
 
 }
