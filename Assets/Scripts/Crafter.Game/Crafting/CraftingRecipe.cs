@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Crafter.Game.Crafting
 {
-    [CreateAssetMenu(fileName = "CraftingRecipe", menuName = "Crafter/Equipment")]
+    [CreateAssetMenu(fileName = "CraftingRecipe", menuName = "Crafter/Recipe")]
     public class CraftingRecipe : ScriptableObject
     {
         [field: SerializeField] public List<CraftingMaterial> Materials { get; set; }
