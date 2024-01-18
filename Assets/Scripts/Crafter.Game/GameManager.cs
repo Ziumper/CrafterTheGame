@@ -14,8 +14,20 @@ namespace Crafter.Game
                 return false;
             }
 
+            HideCursor();
+
             playerBehaviour.gameObject.SetActive(true);
             return true;
+        }
+
+        public void ShowCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        public void HideCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public void ExitGame()
@@ -25,6 +37,7 @@ namespace Crafter.Game
 
         public void BackToMenu()
         {
+            ShowCursor();
             PlayerBehaviour playerBehaviour = Object.FindObjectOfType<PlayerBehaviour>(true);
             playerBehaviour.gameObject.SetActive(false);
             UserInterfaceController.Instance.ShowStartPanel();

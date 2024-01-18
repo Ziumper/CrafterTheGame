@@ -78,8 +78,6 @@ namespace Crafter.Game.Equipment
 
         protected virtual void Init()
         {
-            FindSlots();   
-
             foreach (var slot in _slots)
             {
                 slot.OnSlotClicked.AddListener(OnBagSlotCliked);

@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 438126090}
+      - m_Target: {fileID: 868469648}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1307,10 +1307,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 868469648}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1758198081}
+        m_TargetAssemblyTypeName: Crafter.Game.Equipment.MonoEquipmentBag, Crafter.Game
+        m_MethodName: ToggleEquipmentPanel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4909,7 +4909,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753100646}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.051148277, y: -0.000000017183858, z: 8.800767e-10, w: 0.9986911}
+  m_LocalRotation: {x: 0.05114826, y: 0.000000017183863, z: -8.8007657e-10, w: 0.9986911}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6791,7 +6791,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.032974124, y: -0.0000000042992565, z: 1.4184136e-10, w: 0.9994562}
+  m_LocalRotation: {x: 0.03297412, y: 0.000000004299176, z: -1.4183867e-10, w: 0.9994562}
   m_LocalPosition: {x: 0, y: 2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7805,7 +7805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1219647942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8072,9 +8072,9 @@ RectTransform:
   - {fileID: 1436606781}
   m_Father: {fileID: 1298364987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1234804015
@@ -9885,7 +9885,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559806241}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.032974128, y: -0.000000002149628, z: 7.092067e-11, w: 0.9994562}
+  m_LocalRotation: {x: 0.032974124, y: 0.000000002149469, z: -7.091542e-11, w: 0.9994562}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10262,7 +10262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670808704}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014837112, y: 0.000000017238055, z: -2.557911e-10, w: 0.99988997}
+  m_LocalRotation: {x: 0.014837112, y: 0.000000017231464, z: -2.5569333e-10, w: 0.99988997}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10731,7 +10731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1758198078
 Transform:
   m_ObjectHideFlags: 0
@@ -10763,8 +10763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eaaf92c25e99574b95d571c3f4b65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameCamera: {fileID: 963194227}
   _playerSpeed: 5
   _jumpForce: 1
+  _canMove: 1
 --- !u!143 &1758198080
 CharacterController:
   m_ObjectHideFlags: 0
@@ -12976,9 +12978,9 @@ RectTransform:
   - {fileID: 1489780480}
   m_Father: {fileID: 1298364987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1971359314

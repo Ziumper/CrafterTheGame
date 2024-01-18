@@ -7,12 +7,14 @@ namespace Crafter.Game
 {
     public class PlayerBehaviour : MonoBehaviour
     {
+        [SerializeField] private Camera _gameCamera;
+
         [Header("Movement")]
         [SerializeField] private float _playerSpeed = 5.0f;
         [SerializeField] private float _jumpForce = 1.0f;
+        [SerializeField] private bool _canMove = true;
 
         private EquipmentBag _bag;
-        private Camera _gameCamera;
         private CharacterController _controller;
         private Animator _animator;
         private InteractionZone _interactionZone;
@@ -27,14 +29,20 @@ namespace Crafter.Game
 
         private void Start()
         {
-            _gameCamera = Camera.main;
-            _controller = gameObject.GetComponent<CharacterController>();
-            _animator = gameObject.GetComponentInChildren<Animator>();
-            _interactionZone = gameObject.GetComponentInChildren<InteractionZone>();
+            _controller = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
+            _interactionZone = GetComponentInChildren<InteractionZone>();
             _bag = gameObject.GetComponent<EquipmentBag>();
             _interactables = new LinkedList<Interactable>();
             _interactionZone.OnInteractionNotice.AddListener(OnInteractionNotice);
             _interactionZone.OnInteractionIgnore.AddListener(OnInteractionIgnore);
+
+            _bag.OnPanelToggled.AddListener(OnEquipmentPanelToggled);
+        }
+
+        private void OnEquipmentPanelToggled(bool active)
+        {
+            _canMove = !active;
         }
 
         private void OnInteractionIgnore(Interactable interaction)
@@ -52,7 +60,6 @@ namespace Crafter.Game
             HandleMovement();
             HandleInput();
         }
-
 
         private void HandleInput()
         {
@@ -81,15 +88,17 @@ namespace Crafter.Game
                 _playerVelocity.y = -0.5f;
             }
 
-            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            Vector3 input = Vector3.zero;
+            if (_canMove) { input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); }
 
-            //trasnform input into camera space
+            Vector3 move;
             var forward = _gameCamera.transform.forward;
             forward.y = 0;
             forward.Normalize();
-            var right = Vector3.Cross(Vector3.up, forward);
 
-            Vector3 move = forward * input.z + right * input.x;
+            var right = Vector3.Cross(Vector3.up, forward);
+            move = forward * input.z + right * input.x;
+
             move.y = 0;
 
             _controller.Move(move * Time.deltaTime * _playerSpeed);
@@ -102,8 +111,7 @@ namespace Crafter.Game
                 gameObject.transform.forward = forward;
             }
 
-            // Changes the height position of the player..
-            if (Input.GetButtonDown("Jump") && _groundedPlayer)
+            if (Input.GetButtonDown("Jump") && _groundedPlayer && _canMove)
             {
                 _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * _gravityValue);
                 _animator.SetTrigger("Jump");
@@ -124,7 +132,7 @@ namespace Crafter.Game
             }
         }
 
-    
+
     }
 
 }
