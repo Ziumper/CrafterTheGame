@@ -1,9 +1,7 @@
 ﻿using Crafter.Game.Equipment;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace Crafter.Game.Crafting
 {
@@ -25,9 +23,7 @@ namespace Crafter.Game.Crafting
 
         void Start()
         {
-            FindCraftingSlots(); 
-
-            foreach(var slot in _craftingSlots)
+            foreach (var slot in _craftingSlots)
             {
                 slot.OnSlotClicked.AddListener(OnCraftingSlotCliked);
             }
@@ -38,7 +34,7 @@ namespace Crafter.Game.Crafting
 
         private void OnEquipmentPanelToggled(bool isActive)
         {
-            if(!isActive) { _creaftingPanel.SetActive(false); }
+            if (!isActive) { _creaftingPanel.SetActive(false); }
         }
 
         [ContextMenu("Find crafting slots")]
@@ -110,7 +106,7 @@ namespace Crafter.Game.Crafting
             }
 
             var random = UnityEngine.Random.Range(0f, 1f);
-            if ( random <= recipe.ChanceOfSuccess)
+            if (random <= recipe.ChanceOfSuccess)
             {
                 return true;
             }
