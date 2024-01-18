@@ -16,6 +16,8 @@ namespace Crafter.Game.Equipment
         [SerializeField] private List<GameObject> _equipmentGameObjects = new List<GameObject>();
 
         public bool IsEmpty => _equipmentGameObjects.Count == 0 && _equipment == null;
+        public EquipmentObject Equipment => _equipment;
+
         public UnityEvent<EquipmentBagSlot> OnSlotClicked;
 
         public void AddToSlot(GameObject gameObject)

@@ -1,77 +1,12 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Crafter.Game.Equipment
 {
-    public class EquipmentBag : MonoBehaviour, IEquipmentBag
+    public class EquipmentBag : MonoEquipmentBag
     {
-        [SerializeField] private EquipmentBagSlot[] _equipmentSlots;
-        [SerializeField] private GameObject _equipmentPanel;
         [Tooltip("How far removed object should, be next to player"), SerializeField] private float _throwRadius = 2f;
 
-        private void Start()
-        {
-            if (_equipmentSlots.Length <= 0)
-            {
-                FindSlots();
-            }
-
-            foreach (var slot in _equipmentSlots)
-            {
-                slot.OnSlotClicked.AddListener(OnBagSlotCliked);
-            }
-        }
-
-        public void ToggleEquipmentPanel()
-        {
-            _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
-        }
-
-        private void OnBagSlotCliked(EquipmentBagSlot slot)
-        {
-            if (!slot.IsEmpty)
-            {
-                RemoveFromBag(slot.RemoveOne());
-            }
-        }
-
-        public void AddToBag(GameObject gameObject)
-        {
-            var behaviour = gameObject.GetComponent<EquipmentBehaviour>();
-            if (behaviour == null)
-            {
-                Debug.LogError("Can't add to bag. No equipment behaviour provided for equipment gameObject", gameObject);
-                return;
-            }
-
-            var objectFromEquipment = behaviour.EquipmentObject;
-            if (objectFromEquipment == null)
-            {
-                Debug.LogError("Can't add to bag. No equipment object provided for equipment behaviour in equipment gameObject", gameObject);
-                return;
-            }
-
-            var bagSlot = _equipmentSlots.FirstOrDefault(item => item.ContainsEquipment(objectFromEquipment));
-            bool notConatinsEquipment = bagSlot == null;
-            if (notConatinsEquipment)
-            {
-                bagSlot = _equipmentSlots.FirstOrDefault(_item => _item.IsEmpty);
-                if (bagSlot == null)
-                {
-                    Debug.Log($"Can't add {objectFromEquipment.Name} to bag. No empty slots inside bag!");
-                    return;
-                }
-
-                bagSlot.AddToSlot(objectFromEquipment, gameObject);
-                Debug.Log($"Added equipment {objectFromEquipment.Name} to bag", gameObject);
-                return;
-            }
-
-            bagSlot.AddToSlot(gameObject);
-            Debug.Log($"Added equipment object to bag {objectFromEquipment.Name}", gameObject);
-        }
-
-        public void RemoveFromBag(GameObject gameObject)
+        public override void RemoveFromBag(GameObject gameObject)
         {
             var equipmentBehaviour = gameObject.GetComponent<EquipmentBehaviour>();
 
@@ -87,16 +22,10 @@ namespace Crafter.Game.Equipment
                 return;
             }
 
-            gameObject.RotateRandomAround(this.gameObject,_throwRadius);
+            gameObject.RotateRandomAround(this.gameObject, _throwRadius);
             gameObject.SetActive(true);
 
             Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
-        }
-
-        [ContextMenu("Find Bag Slots")]
-        private void FindSlots()
-        {
-            _equipmentSlots = _equipmentPanel.GetComponentsInChildren<EquipmentBagSlot>(true);
         }
     }
 }
