@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abbeea486809b04895e7816545b8a61, type: 3}
+  m_Name: StoneAxeRecipe
+  m_EditorClassIdentifier: 
+  _chanceOfSuccess: 0.5
+  <Materials>k__BackingField:
+  - AmountNeeded: 1
+    <Material>k__BackingField: {fileID: 11400000, guid: 42fec87b693c6df468a24969e5c1c1f9,
+      type: 2}
+  - AmountNeeded: 1
+    <Material>k__BackingField: {fileID: 11400000, guid: 1d4df20b5d369ff4b92e78f779d91f49,
+      type: 2}
+  <Prefab>k__BackingField: {fileID: 5216497467679432457, guid: 6c883a278751bd540b067d250c6ee915,
+    type: 3}
+  <EquipmentToCraft>k__BackingField: {fileID: 11400000, guid: 187cc92359a06524ea47342433ded083,
+    type: 2}

@@ -94,12 +94,11 @@ namespace Crafter.Game.Equipment
             var gameObjects = _equipmentGameObjects.GetRange(start, amount);
             _equipmentGameObjects.RemoveRange(start,amount);
 
-            if (gameObjects.Count <= 0) 
+            UpdateCountText();
+
+            if (_equipmentGameObjects.Count <= 0) 
             {
-                if (_equipmentGameObjects.Count <= 0)
-                {
-                    ResetSlot();
-                }
+                 ResetSlot();   
             }
 
             return gameObjects;

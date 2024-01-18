@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Crafter.Game.Equipment
 {
     public interface IEquipmentBag
     {
+        UnityEvent<bool> OnPanelToggled { get; }
         void ToggleEquipmentPanel();
         void AddToBag(GameObject equipment);
         bool RemoveFromBag(GameObject equipment);

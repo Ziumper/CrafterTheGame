@@ -7,9 +7,18 @@ namespace Crafter.Game.Crafting
     [CreateAssetMenu(fileName = "CraftingRecipe", menuName = "Crafter/Recipe")]
     public class CraftingRecipe : ScriptableObject
     {
-        [field: SerializeField] public List<CraftingMaterial> Materials { get; set; }
-        [field: SerializeField] public float ChanceOfSuccess { get; set; }
-        [field: SerializeField] public GameObject Prefab { get; set; }
-        [field: SerializeField] public EquipmentObject EquipmentToCraft { get; set; } 
+        [Min(0f), SerializeField] private float _chanceOfSuccess;
+        public float ChanceOfSuccess { get => _chanceOfSuccess; }
+        [field: SerializeField] public List<CraftingMaterial> Materials { get; private set; }
+        [field: SerializeField] public GameObject Prefab { get; private set; }
+        [field: SerializeField] public EquipmentObject EquipmentToCraft { get; private set; }
+
+        private void OnValidate()
+        {
+            if(_chanceOfSuccess > 1f)
+            {
+                _chanceOfSuccess = 1f;
+            }
+        }
     }
 }

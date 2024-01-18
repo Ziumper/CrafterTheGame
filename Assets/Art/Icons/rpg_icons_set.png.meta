@@ -522,7 +522,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rpg_icons_set_19
+      name: wood
       rect:
         serializedVersion: 2
         x: 192
@@ -1782,7 +1782,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rpg_icons_set_79
+      name: stone_axe
       rect:
         serializedVersion: 2
         x: 960
@@ -1971,7 +1971,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rpg_icons_set_88
+      name: club_with_nail
       rect:
         serializedVersion: 2
         x: 512
@@ -5247,7 +5247,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wood
+      name: plank
       rect:
         serializedVersion: 2
         x: 256
@@ -5509,7 +5509,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      club_with_nail: -1112924853
       iron: 1401320061
+      plank: -556618000
       rpg_icons_set_0: -1156384806
       rpg_icons_set_1: 711547671
       rpg_icons_set_10: -618310727
@@ -5609,7 +5611,6 @@ TextureImporter:
       rpg_icons_set_187: -1401161915
       rpg_icons_set_188: 971379879
       rpg_icons_set_189: 1657949580
-      rpg_icons_set_19: 1229441775
       rpg_icons_set_190: 1829917433
       rpg_icons_set_191: 586259747
       rpg_icons_set_192: -1709086094
@@ -5739,7 +5740,6 @@ TextureImporter:
       rpg_icons_set_76: 555205168
       rpg_icons_set_77: 628667069
       rpg_icons_set_78: -22013181
-      rpg_icons_set_79: -485984105
       rpg_icons_set_8: -1694979736
       rpg_icons_set_80: -1091076143
       rpg_icons_set_81: 619234689
@@ -5749,7 +5749,6 @@ TextureImporter:
       rpg_icons_set_85: 637090747
       rpg_icons_set_86: -1112924853
       rpg_icons_set_87: -1560143444
-      rpg_icons_set_88: -796875271
       rpg_icons_set_89: -531679557
       rpg_icons_set_9: 889464847
       rpg_icons_set_90: 1257756450
@@ -5764,7 +5763,8 @@ TextureImporter:
       rpg_icons_set_99: -1807295920
       silver: -793789396
       stone: -1240093423
-      wood: -556618000
+      stone_axe: 628667069
+      wood: 971379879
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

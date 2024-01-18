@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Crafter.Game.Equipment
 {
-    public class MonoEquipmentBag : MonoBehaviour, IEquipmentBag
+    public abstract class MonoEquipmentBag : MonoBehaviour, IEquipmentBag
     {
-       
         [SerializeField] protected GameObject _equipmentPanel;
 
         protected Dictionary<EquipmentObject, IEquipmentBagSlot> _equipmentDictionary = new Dictionary<EquipmentObject, IEquipmentBagSlot> ();
         protected IEquipmentBagSlot[] _slots;
 
+        [field: SerializeField] public UnityEvent<bool> OnPanelToggled { get; private set; }
         public void ToggleEquipmentPanel()
         {
             _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
+            OnPanelToggled.Invoke(_equipmentPanel.gameObject.activeSelf);
         }
 
         public virtual void AddToBag(GameObject equipment)
@@ -76,10 +78,7 @@ namespace Crafter.Game.Equipment
 
         protected virtual void Init()
         {
-            if (_slots.Length <= 0)
-            {
-                FindSlots();
-            }
+            FindSlots();   
 
             foreach (var slot in _slots)
             {

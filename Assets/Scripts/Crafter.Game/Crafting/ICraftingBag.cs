@@ -4,6 +4,6 @@ namespace Crafter.Game.Crafting
 {
     public interface ICraftingBag
     {
-        void Craft(EquipmentObject equipmentObject);
+        void CraftFrom(CraftingRecipe recipe);
     }
 }

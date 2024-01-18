@@ -1,39 +1,28 @@
-﻿using Crafter.Game.Equipment;
-using System;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Crafter.Game.Crafting
 {
-    public class CraftingBagSlot : MonoBehaviour, IEquipmentBagSlot
+    public class CraftingBagSlot : MonoBehaviour, IPointerClickHandler
     {
-        public bool IsEmpty => throw new NotImplementedException();
+        [SerializeField] private Image _image;
+        [SerializeField] private TextMeshProUGUI _chanceOfSuccess;
+        [field: SerializeField] public CraftingRecipe Recipe { get; private set; }
+        [field: SerializeField] public UnityEvent<CraftingBagSlot> OnSlotClicked { get; private set; }
 
-        [field: SerializeField] public UnityEvent<IEquipmentBagSlot> OnSlotClicked { get; private set; }
-
-        public EquipmentObject Equipment => throw new NotImplementedException();
-
-        public int SlotCount => throw new NotImplementedException();
-
-        public void AddOne(EquipmentObject equipmentObject, GameObject gameObject)
+        void Start()
         {
-            throw new NotImplementedException();
+            _image = GetComponent<Image>();
+            _image.sprite = Recipe.EquipmentToCraft.Icon;
+            _chanceOfSuccess.text = string.Format("{0}%", Recipe.ChanceOfSuccess*100);
         }
 
-        public void AddOne(GameObject gameObject)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<GameObject> RemoveMany(EquipmentObject equipmentObject, int amount)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GameObject RemoveOne()
-        {
-            throw new NotImplementedException();
+            OnSlotClicked.Invoke(this);
         }
     }
 }

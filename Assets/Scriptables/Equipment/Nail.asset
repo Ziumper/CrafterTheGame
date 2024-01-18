@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccd3a7063cb61e141b468279ba388094, type: 3}
-  m_Name: Wood
+  m_Name: Nail
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Wood
-  <Icon>k__BackingField: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+  <Name>k__BackingField: Nail
+  <Icon>k__BackingField: {fileID: 21300000, guid: eb05882285ffebc46a6b9b6ab7050fcb,
     type: 3}

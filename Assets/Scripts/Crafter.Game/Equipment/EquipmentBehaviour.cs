@@ -1,4 +1,5 @@
 ﻿using Crafter.Game.Interaction;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Crafter.Game.Equipment
@@ -6,14 +7,20 @@ namespace Crafter.Game.Equipment
     public class EquipmentBehaviour : MonoInteraction
     {
         private Outline _outline;
-        
-        [field: SerializeField] public EquipmentObject EquipmentObject { get; private set; }
 
+        [field: SerializeField] public EquipmentObject EquipmentObject { get; private set; }
+        
         void Start()
         {
             _interactionName = "Pickup";
             _outline = GetComponent<Outline>();
             _outline.enabled = false;
+
+            var icons = GetComponentsInChildren<SpriteRenderer>();
+            foreach ( var icon in icons )
+            {
+                icon.sprite = EquipmentObject.Icon;
+            }
         }
 
         public override void Notice()

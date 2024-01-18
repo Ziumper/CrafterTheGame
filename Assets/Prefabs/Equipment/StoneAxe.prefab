@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8483636503244395185
+--- !u!1001 &5573620021573221633
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -12,24 +12,24 @@ PrefabInstance:
         type: 3}
       propertyPath: <EquipmentObject>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 97a00acc2a1ffcf4babff54080884deb,
+      objectReference: {fileID: 11400000, guid: 187cc92359a06524ea47342433ded083,
         type: 2}
     - target: {fileID: 377670347587166728, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Name
-      value: Wood
+      value: StoneAxe
       objectReference: {fileID: 0}
     - target: {fileID: 1896643810740646867, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     - target: {fileID: 3306924094705985559, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     - target: {fileID: 6899130901988997402, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
@@ -85,25 +85,25 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     - target: {fileID: 8040445520319795854, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     - target: {fileID: 9000153867082216087, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     - target: {fileID: 9203698940096309931, guid: 0e9f744891a27604aa301b24a5da2955,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 971379879, guid: fa1508c902c016e40b0f3e68fd7fe085,
+      objectReference: {fileID: 628667069, guid: fa1508c902c016e40b0f3e68fd7fe085,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

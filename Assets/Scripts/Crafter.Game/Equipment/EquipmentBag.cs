@@ -9,11 +9,6 @@ namespace Crafter.Game.Equipment
 
         protected override void Init()
         {
-            if(_equipmentBagSlots.Length >= 0)
-            {
-                _slots = _equipmentBagSlots;
-            }
-            
             base.Init();
         }
 
@@ -33,6 +28,7 @@ namespace Crafter.Game.Equipment
         protected override void FindSlots()
         {
             _equipmentBagSlots = _equipmentPanel.GetComponentsInChildren<EquipmentBagSlot>();
+            _slots = _equipmentBagSlots;
         }
     }
 }
