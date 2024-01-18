@@ -7,6 +7,8 @@ namespace Crafter.Game.Equipment
     {
         void ToggleEquipmentPanel();
         void AddToBag(GameObject equipment);
-        void RemoveFromBag(GameObject equipment);
+        bool RemoveFromBag(GameObject equipment);
+        bool ContainsEquipment(EquipmentObject equipment, int amount);
+        void DestroyAndRemoveFromBag(EquipmentObject equipment, int amount);
     }
 }

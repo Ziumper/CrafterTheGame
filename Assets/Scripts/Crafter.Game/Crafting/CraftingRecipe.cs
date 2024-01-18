@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Crafter.Game.Equipment;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Crafter.Game.Crafting
@@ -8,6 +9,7 @@ namespace Crafter.Game.Crafting
     {
         [field: SerializeField] public List<CraftingMaterial> Materials { get; set; }
         [field: SerializeField] public float ChanceOfSuccess { get; set; }
-        [field: SerializeField] public GameObject ResultPrefab { get; set; }    
+        [field: SerializeField] public GameObject Prefab { get; set; }
+        [field: SerializeField] public EquipmentObject EquipmentToCraft { get; set; } 
     }
 }

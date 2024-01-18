@@ -6,10 +6,10 @@ namespace Crafter.Game.Equipment
 {
     public abstract class MonoEquipmentBag : MonoBehaviour, IEquipmentBag
     {
-        [SerializeField] protected EquipmentBagSlot[] _slots;
+        [SerializeField] protected IEquipmentBagSlot[] _slots;
         [SerializeField] protected GameObject _equipmentPanel;
 
-        protected Dictionary<EquipmentObject, EquipmentBagSlot> _equipmentDictionary;
+        protected Dictionary<EquipmentObject, IEquipmentBagSlot> _equipmentDictionary;
 
         public void ToggleEquipmentPanel()
         {
@@ -34,7 +34,7 @@ namespace Crafter.Game.Equipment
 
             if (_equipmentDictionary.TryGetValue(objectFromEquipment, out var bagSlot))
             {
-                bagSlot.AddToSlot(gameObject);
+                bagSlot.AddOne(gameObject);
                 Debug.Log($"Added equipment object to bag {objectFromEquipment.Name}", gameObject);
                 return;
             }
@@ -46,12 +46,30 @@ namespace Crafter.Game.Equipment
                 return;
             }
 
-            bagSlot.AddToSlot(objectFromEquipment, gameObject);
+            bagSlot.AddOne(objectFromEquipment, gameObject);
             _equipmentDictionary.Add(objectFromEquipment,bagSlot);
             Debug.Log($"Added equipment {objectFromEquipment.Name} to bag", gameObject);
         }
 
-        public virtual void RemoveFromBag(GameObject equipment) { }
+        public virtual bool RemoveFromBag(GameObject equipment) 
+        {
+            var equipmentBehaviour = gameObject.GetComponent<EquipmentBehaviour>();
+
+            if (equipmentBehaviour == null)
+            {
+                Debug.LogError("No equipment behaviour provided can't remove from bag", gameObject);
+                return false;
+            }
+
+            if (equipmentBehaviour.EquipmentObject == null)
+            {
+                Debug.LogError("Can't remove. No equipment provided in equipment object", gameObject);
+                return false;
+            }
+
+            Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
+            return true;
+        }
 
         private void Start() { Init(); }
 
@@ -74,7 +92,7 @@ namespace Crafter.Game.Equipment
             _slots = _equipmentPanel.GetComponentsInChildren<EquipmentBagSlot>(true);
         }
 
-        private void OnBagSlotCliked(EquipmentBagSlot slot)
+        public virtual void OnBagSlotCliked(IEquipmentBagSlot slot)
         {
             if (!slot.IsEmpty)
             {
@@ -82,6 +100,36 @@ namespace Crafter.Game.Equipment
                 if(slot.IsEmpty)
                 {
                     _equipmentDictionary.Remove(slot.Equipment);
+                }
+            }
+        }
+
+        public bool ContainsEquipment(EquipmentObject equipment, int amount)
+        {
+            if(_equipmentDictionary.TryGetValue(equipment,out var slot))
+            {
+                if (slot.SlotCount < amount) return false;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void DestroyAndRemoveFromBag(EquipmentObject equipment, int amount)
+        {
+            if(_equipmentDictionary.TryGetValue(equipment,out var slot))
+            {
+                if(slot.SlotCount < amount)
+                {
+                    Debug.LogError($"Not enoguht items in equipment bag for {equipment.Name}. Required: {amount}, has: {slot.SlotCount}", gameObject);
+                    return;
+                }
+
+                var gameObjects = slot.RemoveMany(equipment, amount);
+                foreach(var gameObject in gameObjects)
+                {
+                    Destroy(gameObject);
                 }
             }
         }

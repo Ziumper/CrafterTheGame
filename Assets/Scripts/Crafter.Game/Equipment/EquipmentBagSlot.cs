@@ -8,19 +8,20 @@ using UnityEngine.UI;
 
 namespace Crafter.Game.Equipment
 {
-    public class EquipmentBagSlot : MonoBehaviour, IPointerClickHandler
+    public class EquipmentBagSlot : MonoBehaviour, IPointerClickHandler, IEquipmentBagSlot
     {
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _countText;
         [SerializeField] private EquipmentObject _equipment;
         [SerializeField] private List<GameObject> _equipmentGameObjects = new List<GameObject>();
+        
+        [field: SerializeField] public UnityEvent<IEquipmentBagSlot> OnSlotClicked { get; private set; }
 
+        public int SlotCount => _equipmentGameObjects.Count;
         public bool IsEmpty => _equipmentGameObjects.Count == 0 && _equipment == null;
         public EquipmentObject Equipment => _equipment;
 
-        public UnityEvent<EquipmentBagSlot> OnSlotClicked;
-
-        public void AddToSlot(GameObject gameObject)
+        public void AddOne(GameObject gameObject)
         {
             _equipmentGameObjects.Add(gameObject);
             UpdateCountText();
@@ -39,27 +40,18 @@ namespace Crafter.Game.Equipment
 
             if(_equipmentGameObjects.Count <= 0)
             {
-                _equipment = null;
-                _image.sprite = null;
-                _image.raycastTarget = false;
+                ResetSlot();
             }
 
             return gameObject;
         }
 
-        public void AddToSlot(EquipmentObject equipmentObject, GameObject gameObject)
+        public void AddOne(EquipmentObject equipmentObject, GameObject gameObject)
         {
-            AddToSlot(gameObject);
+            AddOne(gameObject);
             _equipment = equipmentObject;
             _image.sprite = equipmentObject.Icon;
             _image.raycastTarget = true;
-        }
-
-        public bool ContainsEquipment(EquipmentObject equipmentObject)
-        {
-            if (equipmentObject == null || _equipment == null) return false;
-
-            return _equipment.Equals(equipmentObject);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -96,5 +88,28 @@ namespace Crafter.Game.Equipment
             _countText.text = _equipmentGameObjects.Count.ToString();
         }
 
+        public List<GameObject> RemoveMany(EquipmentObject equipmentObject, int amount)
+        {
+            var start = 0;
+            var gameObjects = _equipmentGameObjects.GetRange(start, amount);
+            _equipmentGameObjects.RemoveRange(start,amount);
+
+            if (gameObjects.Count <= 0) 
+            {
+                if (_equipmentGameObjects.Count <= 0)
+                {
+                    ResetSlot();
+                }
+            }
+
+            return gameObjects;
+        }
+
+        private void ResetSlot()
+        {
+            _equipment = null;
+            _image.sprite = null;
+            _image.raycastTarget = false;
+        }
     }
 }

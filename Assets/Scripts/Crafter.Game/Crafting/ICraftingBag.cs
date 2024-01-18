@@ -1,7 +1,9 @@
-﻿namespace Crafter.Game.Crafting
+﻿using Crafter.Game.Equipment;
+
+namespace Crafter.Game.Crafting
 {
     public interface ICraftingBag
     {
-        void Craft();
+        void Craft(EquipmentObject equipmentObject);
     }
 }

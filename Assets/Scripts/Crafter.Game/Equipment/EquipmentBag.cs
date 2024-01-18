@@ -6,26 +6,16 @@ namespace Crafter.Game.Equipment
     {
         [Tooltip("How far removed object should, be next to player"), SerializeField] private float _throwRadius = 2f;
 
-        public override void RemoveFromBag(GameObject gameObject)
+        public override bool RemoveFromBag(GameObject gameObject)
         {
-            var equipmentBehaviour = gameObject.GetComponent<EquipmentBehaviour>();
-
-            if (equipmentBehaviour == null)
+            if(base.RemoveFromBag(gameObject))
             {
-                Debug.LogError("No equipment behaviour provided can't remove from bag", gameObject);
-                return;
+                gameObject.RotateRandomAround(this.gameObject, _throwRadius);
+                gameObject.SetActive(true);
+                return true;
             }
 
-            if (equipmentBehaviour.EquipmentObject == null)
-            {
-                Debug.LogError("Can't remove. No equipment provided in equipment object", gameObject);
-                return;
-            }
-
-            gameObject.RotateRandomAround(this.gameObject, _throwRadius);
-            gameObject.SetActive(true);
-
-            Debug.Log($"Removed equipment {equipmentBehaviour.EquipmentObject.Name} from bag", gameObject);
+            return false;
         }
     }
 }
