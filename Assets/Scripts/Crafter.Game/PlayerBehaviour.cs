@@ -63,17 +63,17 @@ namespace Crafter.Game
 
         private void HandleInput()
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 GameManager.Instance.BackToMenu();
             }
 
-            if (Input.GetButtonDown("Submit"))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 Interact();
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetKeyDown(KeyCode.I))
             {
                 _bag.ToggleEquipmentPanel();
             }
@@ -111,7 +111,7 @@ namespace Crafter.Game
                 gameObject.transform.forward = forward;
             }
 
-            if (Input.GetButtonDown("Jump") && _groundedPlayer && _canMove)
+            if (Input.GetKeyDown(KeyCode.Space) && _groundedPlayer && _canMove)
             {
                 _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * _gravityValue);
                 _animator.SetTrigger("Jump");
