@@ -14,6 +14,12 @@ namespace Crafter.Game
         [SerializeField] private float _jumpForce = 1.0f;
         [SerializeField] private bool _canMove = true;
 
+        [Header("Input")]
+        [SerializeField] private KeyCode _backToMenuKey = KeyCode.Escape;
+        [SerializeField] private KeyCode _interactKey = KeyCode.E;
+        [SerializeField] private KeyCode _openBagKey = KeyCode.B;
+        [SerializeField] private KeyCode _jumpKeyCode = KeyCode.Space;
+
         private EquipmentBag _bag;
         private CharacterController _controller;
         private Animator _animator;
@@ -63,17 +69,17 @@ namespace Crafter.Game
 
         private void HandleInput()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(_backToMenuKey))
             {
                 GameManager.Instance.BackToMenu();
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(_interactKey))
             {
                 Interact();
             }
 
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(_openBagKey))
             {
                 _bag.ToggleEquipmentPanel();
             }
@@ -111,7 +117,7 @@ namespace Crafter.Game
                 gameObject.transform.forward = forward;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && _groundedPlayer && _canMove)
+            if (Input.GetKeyDown(_jumpKeyCode) && _groundedPlayer && _canMove)
             {
                 _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * _gravityValue);
                 _animator.SetTrigger("Jump");
