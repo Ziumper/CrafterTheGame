@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Crafting message for:'
+  m_text: Crafting message for item.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8685,7 +8685,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitTime: 2
-  _item: {fileID: 135676952}
+  _message: {fileID: 135676952}
+  _successText: 'Crafting succesfull for '
+  _failedText: 'Crafting failed for '
+  _noMaterialsText: 'Not enough materials for '
 --- !u!222 &1351557977
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11120,78 +11123,42 @@ MonoBehaviour:
     OnSuccess:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 135676952}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_text
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 'Crafting succesfull for '
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1351557975}
           m_TargetAssemblyTypeName: Crafter.Game.Crafting.CraftingMessageNotice,
             Crafter.Game
-          m_MethodName: ShowNoticeMessage
+          m_MethodName: OnSuccess
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Crafting succesfull for
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
     OnFailure:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 135676952}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_text
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 'Crafting failed for '
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1351557975}
           m_TargetAssemblyTypeName: Crafter.Game.Crafting.CraftingMessageNotice,
             Crafter.Game
-          m_MethodName: ShowNoticeMessage
+          m_MethodName: OnFailure
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Crafting failed for
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
     OnNotEnoughMaterials:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 135676952}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_text
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 'Not enough materials for '
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1351557975}
           m_TargetAssemblyTypeName: Crafter.Game.Crafting.CraftingMessageNotice,
             Crafter.Game
-          m_MethodName: ShowNoticeMessage
+          m_MethodName: OnNNoMaterialsText
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
