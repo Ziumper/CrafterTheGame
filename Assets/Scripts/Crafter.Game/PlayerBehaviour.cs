@@ -1,5 +1,7 @@
+using Cinemachine;
 using Crafter.Game.Equipment;
 using Crafter.Game.Interaction;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +26,7 @@ namespace Crafter.Game
         private CharacterController _controller;
         private Animator _animator;
         private InteractionZone _interactionZone;
+        private CinemachineFreeLook _freeLook;
 
         private Vector3 _playerVelocity;
         private bool _groundedPlayer;
@@ -42,12 +45,24 @@ namespace Crafter.Game
             _interactables = new LinkedList<Interactable>();
             _interactionZone.OnInteractionNotice.AddListener(OnInteractionNotice);
             _interactionZone.OnInteractionIgnore.AddListener(OnInteractionIgnore);
+            _freeLook = GetComponentInChildren<CinemachineFreeLook>();
 
             _bag.OnPanelToggled.AddListener(OnEquipmentPanelToggled);
         }
 
         private void OnEquipmentPanelToggled(bool active)
         {
+            StartCoroutine(ToggleCursor(active));
+        }
+
+        private IEnumerator ToggleCursor(bool active)
+        {
+            if (active) { GameManager.Instance.ShowCursor(); }
+            else { GameManager.Instance.HideCursor(); }
+
+            yield return new WaitForEndOfFrame();
+
+            _freeLook.enabled = !active;
             _canMove = !active;
         }
 

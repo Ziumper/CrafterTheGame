@@ -130,6 +130,11 @@ namespace Crafter.Game.Equipment
                 {
                     Destroy(gameObject);
                 }
+
+                if(slot.IsEmpty)
+                {
+                    _equipmentDictionary.Remove(equipment);
+                }
             }
         }
     }

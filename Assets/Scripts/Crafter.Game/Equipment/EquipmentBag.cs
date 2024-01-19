@@ -10,15 +10,7 @@ namespace Crafter.Game.Equipment
         protected override void Init()
         {
             _slots = _equipmentBagSlots;
-            OnPanelToggled.AddListener(OnEquipmentPanelToggled);
             base.Init();
-        }
-
-        private void OnEquipmentPanelToggled(bool active)
-        {
-            if (active) { GameManager.Instance.ShowCursor(); return; }
-
-            GameManager.Instance.HideCursor();
         }
 
         public override bool RemoveFromBag(GameObject gameObject)
