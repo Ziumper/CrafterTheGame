@@ -32,6 +32,9 @@ namespace Crafter.Game
         private bool _groundedPlayer;
         private float _gravityValue = -9.81f;
         private LinkedList<Interactable> _interactables;
+        private Vector3 _inputVector;
+        private Vector3 _moveVector;
+        private Vector3 _forwardVector;
 
         public IEquipmentBag EquipmentBag => _bag;
 
@@ -57,13 +60,14 @@ namespace Crafter.Game
 
         private IEnumerator ToggleCursor(bool active)
         {
+            _canMove = !active;
+
             if (active) { GameManager.Instance.ShowCursor(); }
             else { GameManager.Instance.HideCursor(); }
 
             yield return new WaitForEndOfFrame();
 
             _freeLook.enabled = !active;
-            _canMove = !active;
         }
 
         private void OnInteractionIgnore(Interactable interaction)
@@ -78,11 +82,11 @@ namespace Crafter.Game
 
         void Update()
         {
-            HandleMovement();
-            HandleInput();
+            UpdateMovement();
+            UpdateInput();
         }
 
-        private void HandleInput()
+        private void UpdateInput()
         {
             if (Input.GetKeyDown(_backToMenuKey))
             {
@@ -100,38 +104,58 @@ namespace Crafter.Game
             }
         }
 
-        private void HandleMovement()
+        private void UpdateMovement()
+        {
+            GuardPlayerGround();
+            UpdateMoveVectors();
+            HandleJumping();
+        }
+
+        private void UpdateMoveVectors()
+        {
+            UpdateInputVector();
+           
+            var _forwardVector = _gameCamera.transform.forward;
+            _forwardVector.y = 0;
+            _forwardVector.Normalize();
+
+            var right = Vector3.Cross(Vector3.up, _forwardVector);
+            _moveVector = _forwardVector * _inputVector.z + right * _inputVector.x;
+            _moveVector.y = 0;
+
+            _controller.Move(_moveVector * Time.deltaTime * _playerSpeed);
+
+            if (_inputVector != Vector3.zero)
+            {
+                gameObject.transform.forward = _forwardVector;
+            }
+
+            AnimateMovement();
+        }
+
+        private void AnimateMovement()
+        {
+            _animator.SetFloat("MovementX", _inputVector.x);
+            _animator.SetFloat("MovementZ", _inputVector.z);
+        }
+
+        private void UpdateInputVector()
+        {
+            _inputVector = Vector3.zero;
+            if (_canMove) { _inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); }
+        }
+
+        private void GuardPlayerGround()
         {
             _groundedPlayer = _controller.isGrounded;
-
             if (_groundedPlayer && _playerVelocity.y < 0)
             {
                 _playerVelocity.y = -0.5f;
             }
+        }
 
-            Vector3 input = Vector3.zero;
-            if (_canMove) { input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); }
-
-            Vector3 move;
-            var forward = _gameCamera.transform.forward;
-            forward.y = 0;
-            forward.Normalize();
-
-            var right = Vector3.Cross(Vector3.up, forward);
-            move = forward * input.z + right * input.x;
-
-            move.y = 0;
-
-            _controller.Move(move * Time.deltaTime * _playerSpeed);
-
-            _animator.SetFloat("MovementX", input.x);
-            _animator.SetFloat("MovementZ", input.z);
-
-            if (input != Vector3.zero)
-            {
-                gameObject.transform.forward = forward;
-            }
-
+        private void HandleJumping()
+        {
             if (Input.GetKeyDown(_jumpKeyCode) && _groundedPlayer && _canMove)
             {
                 _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * _gravityValue);
