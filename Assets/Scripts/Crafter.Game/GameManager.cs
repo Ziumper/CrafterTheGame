@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Crafter.Game
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        public UnityEvent OnBackToMenu;
+
         public bool StartGameOrContinue()
         {
             PlayerBehaviour playerBehaviour = Object.FindObjectOfType<PlayerBehaviour>(true);
@@ -42,7 +45,7 @@ namespace Crafter.Game
             ShowCursor();
             PlayerBehaviour playerBehaviour = Object.FindObjectOfType<PlayerBehaviour>(true);
             playerBehaviour.gameObject.SetActive(false);
-            UserInterfaceController.Instance.ShowStartPanel();
+            OnBackToMenu.Invoke();
         }
     }
 
