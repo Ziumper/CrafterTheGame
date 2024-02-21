@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,10 +14,18 @@ namespace Crafter.Game.Equipment
         protected IEquipmentBagSlot[] _slots;
 
         [field: SerializeField] public UnityEvent<bool> OnPanelToggled { get; private set; }
+        [field: SerializeField] public UnityEvent OnEquipmentPanelDisabled {  get; private set; }
+
         public void ToggleEquipmentPanel()
         {
             _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
             OnPanelToggled.Invoke(_equipmentPanel.gameObject.activeSelf);
+        }
+
+        public void DisableEequipmentPanel()
+        {
+            _equipmentPanel.SetActive(false);
+            OnEquipmentPanelDisabled.Invoke();
         }
 
         public virtual void AddToBag(GameObject equipment)

@@ -34,10 +34,20 @@ namespace Crafter.Game
         private LinkedList<Interactable> _interactables;
         private Vector3 _inputVector;
         private Vector3 _moveVector;
-        private Vector3 _forwardVector;
 
         public IEquipmentBag EquipmentBag => _bag;
 
+        public void StartPlaying()
+        {
+            _canMove = true;
+            if(_freeLook == null)
+            {
+                _freeLook = GetComponentInChildren<CinemachineFreeLook>(true);
+            }
+            
+            _freeLook.enabled = true;
+            gameObject.SetActive(true);
+        }
 
         private void Start()
         {
@@ -91,9 +101,10 @@ namespace Crafter.Game
             if (Input.GetKeyDown(_backToMenuKey))
             {
                 GameManager.Instance.BackToMenu();
+                _bag.DisableEequipmentPanel();
             }
 
-            if (Input.GetKeyDown(_interactKey))
+            if (Input.GetKeyDown(_interactKey) && _canMove)
             {
                 Interact();
             }

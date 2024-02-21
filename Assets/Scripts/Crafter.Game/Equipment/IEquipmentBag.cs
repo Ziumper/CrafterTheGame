@@ -6,6 +6,7 @@ namespace Crafter.Game.Equipment
 {
     public interface IEquipmentBag
     {
+        UnityEvent OnEquipmentPanelDisabled { get;  }
         UnityEvent<bool> OnPanelToggled { get; }
         void ToggleEquipmentPanel();
         void AddToBag(GameObject equipment);

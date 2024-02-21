@@ -19,7 +19,7 @@ namespace Crafter.Game
 
             HideCursor();
 
-            playerBehaviour.gameObject.SetActive(true);
+            playerBehaviour.StartPlaying();
             return true;
         }
 

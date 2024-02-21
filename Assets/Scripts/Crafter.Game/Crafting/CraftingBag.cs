@@ -30,6 +30,12 @@ namespace Crafter.Game.Crafting
 
             _equipmentBag = gameObject.GetComponent<EquipmentBag>();
             _equipmentBag.OnPanelToggled.AddListener(OnEquipmentPanelToggled);
+            _equipmentBag.OnEquipmentPanelDisabled.AddListener(OnEquipmentPanelDisabled);
+        }
+
+        private void OnEquipmentPanelDisabled()
+        {
+            _creaftingPanel.SetActive(false);
         }
 
         private void OnEquipmentPanelToggled(bool isActive)
